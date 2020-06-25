@@ -12,18 +12,17 @@ import torchvision
 from torchvision import transforms,datasets
 
 train=datasets.MNIST("",train=True,download=True,transform=transforms.Compose([transforms.ToTensor()]))
-
 test=datasets.MNIST("",train=False,download=True,transform=transforms.Compose([transforms.ToTensor()]))
 
 """shuffle=True is to shuffle the dataset"""
 
 trainset= torch.utils.data.DataLoader(train,batch_size=10,shuffle=True)
-
 testset=torch.utils.data.DataLoader(test,batch_size=10,shuffle=True)
 
+      #MODULE
+  
 import torch.nn as nn
 import torch.nn.functional as F
-
 class Net(nn.Module):
   def __init__(self):
 
@@ -40,11 +39,12 @@ class Net(nn.Module):
     x=self.fc4(x)
     return F.log_softmax(x,dim=1)
     return x
-
-
-
 net=Net()
 print(net)
+
+
+
+  # MODEL TRAINING
 
 import torch.optim as optim
 optimizer=optim.Adam(net.parameters(),lr=0.001)
@@ -73,9 +73,14 @@ with torch.no_grad():
       total+=1
 print("accuracy: ",round(correct/total,3))
 
+
+
+
 import matplotlib.pyplot as plt 
 plt.imshow(X[5].view(28,28))
 plt.show()
+
+        #PREDICTION
 
 print(torch.argmax(net(X[5].view(-1,784))[0]))
 
